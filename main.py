@@ -9,6 +9,13 @@ Builder.load_file('design.kv')
 class LoginScreen(Screen):
     def sign_up(self):
         self.manager.current = 'sign_up_screen'
+    def login(self, uname, pword):
+        with open('users.json') as file:
+            users = json.load(file)
+        if uname in users and users[uname]['password'] == pword:
+            self.manager.current = 'login_screen_success'
+        else:
+            self.ids.login_wrong.text = 'Wrong username or password'
 
 class RootWidget(ScreenManager):
     pass
@@ -28,6 +35,11 @@ class SignUpScreen(Screen):
 
 class SignUpScreenSuccess(Screen):
     def login_screen(self):
+        self.manager.transition.direction = 'right'
+        self.manager.current = 'login_screen'
+
+class LoginScreenSuccess(Screen):
+    def log_out(self):
         self.manager.transition.direction = 'right'
         self.manager.current = 'login_screen'
 
