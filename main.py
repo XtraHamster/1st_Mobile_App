@@ -23,7 +23,13 @@ class SignUpScreen(Screen):
                         'created': datetime.now().strftime('%Y-%m-%d %H-%M-%S')}
         with open('users.json', 'w') as file:
             json.dump(users, file)
-        print(users)
+
+        self.manager.current = 'sign_up_screen_success'
+
+class SignUpScreenSuccess(Screen):
+    def login_screen(self):
+        self.manager.transition.direction = 'right'
+        self.manager.current = 'login_screen'
 
 class MainApp(App):
     def build(self):
