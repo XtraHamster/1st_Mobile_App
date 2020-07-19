@@ -1,6 +1,9 @@
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
+from hoverable import HoverBehavior
+from kivy.uix.image import Image
+from kivy.uix.behaviors import ButtonBehavior
 import json, glob
 from datetime import datetime
 from pathlib import Path
@@ -31,7 +34,7 @@ class SignUpScreen(Screen):
                         'password': pword,
                         'created': datetime.now().strftime('%Y-%m-%d %H-%M-%S')}
         with open('users.json', 'w') as file:
-            json.dump(users, file)
+            json.dump(users, file) 
 
         self.manager.current = 'sign_up_screen_success'
 
@@ -58,6 +61,8 @@ class LoginScreenSuccess(Screen):
         else:
             self.ids.quote.text = 'Try another feeling'
 
+class ImageButton(ButtonBehavior, HoverBehavior, Image):
+    pass
 
 class MainApp(App):
     def build(self):
@@ -65,4 +70,4 @@ class MainApp(App):
 
 if __name__ == '__main__':
     MainApp().run()
- 
+  
